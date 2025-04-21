@@ -112,8 +112,14 @@ def without(s, i):
     True
     """
     "*** YOUR CODE HERE ***"
-    
-
+    def delete(s, n):
+        if s == Link.empty :
+            return s
+        elif n == i :
+            return s.rest
+        else :
+            return Link(s.first, delete(s.rest, n + 1))
+    return delete(s, 0)
 
 def duplicate_link(s, val):
     """Mutates s so that each element equal to val is followed by another val.
