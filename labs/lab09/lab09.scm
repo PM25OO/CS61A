@@ -12,9 +12,9 @@
   (lambda (x) (f (g x))))
 
 (define (repeat f n)
-  (if (= n 0)
-      (lambda () #f))
-  (lambda (x) ((repeat f (- n 1)) (f x))))
+  (if (= n 1)
+      (lambda (x) (f x))
+      (lambda (x) ((repeat f (- n 1)) (f x)))))
 
 (define (max a b)
   (if (> a b)
@@ -26,4 +26,11 @@
       b
       a))
 
-(define (gcd a b) 'YOUR-CODE-HERE)
+(define (gcd a b)
+  (define Max (max a b))
+  (define Min (min a b))
+  (if (= (modulo Max Min) 0)
+      Min
+      (gcd Min (modulo Max Min))
+  )
+)
