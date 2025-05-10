@@ -9,9 +9,11 @@ import scheme_forms
 ##############
 # Eval/Apply #
 ##############
+# 求值/应用
 
 def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in Frame ENV.
+    在环境 ENV 中求值 Scheme 表达式 EXPR。
 
     >>> expr = read_line('(+ 2 2)')
     >>> expr
@@ -20,12 +22,14 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     4
     """
     # Evaluate atoms
+    # 对原子表达式求值
     if scheme_symbolp(expr):
         return env.lookup(expr)
     elif self_evaluating(expr):
         return expr
 
     # All non-atomic expressions are lists (combinations)
+    # 所有非原子的表达式都是列表（组合）
     if not scheme_listp(expr):
         raise SchemeError('malformed list: {0}'.format(repl_str(expr)))
     first, rest = expr.first, expr.rest
@@ -38,7 +42,9 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
-    Frame ENV, the current environment."""
+    Frame ENV, the current environment.
+    在当前环境 Frame ENV 中，将 Scheme 过程 PROCEDURE 应用于参数值 ARGS（一个 Scheme 列表）。
+    """
     validate_procedure(procedure)
     if not isinstance(env, Frame):
        assert False, "Not a Frame: {}".format(env)
@@ -66,6 +72,7 @@ def scheme_apply(procedure, args, env):
 def eval_all(expressions, env):
     """Evaluate each expression in the Scheme list EXPRESSIONS in
     Frame ENV (the current environment) and return the value of the last.
+    在当前环境 Frame ENV 中，对 Scheme 列表 EXPRESSIONS 中的每个表达式进行求值，并返回最后一个表达式的值。
 
     >>> eval_all(read_line("(1)"), create_global_frame())
     1
@@ -86,17 +93,24 @@ def eval_all(expressions, env):
 ################################
 # Extra Credit: Tail Recursion #
 ################################
+# 附加加分项：尾递归优化
 
 class Unevaluated:
-    """An expression and an environment in which it is to be evaluated."""
+    """An expression and an environment in which it is to be evaluated.
+    一个表达式及其将要被求值的环境。
+    """
 
     def __init__(self, expr, env):
-        """Expression EXPR to be evaluated in Frame ENV."""
+        """Expression EXPR to be evaluated in Frame ENV.
+        表达式 EXPR 将在 Frame ENV 中被求值。
+        """
         self.expr = expr
         self.env = env
 
 def complete_apply(procedure, args, env):
-    """Apply procedure to args in env; ensure the result is not an Unevaluated."""
+    """Apply procedure to args in env; ensure the result is not an Unevaluated.
+    在 env 环境中将 procedure 应用于 args；确保结果不是一个 Unevaluated 对象。
+    """
     validate_procedure(procedure)
     val = scheme_apply(procedure, args, env)
     if isinstance(val, Unevaluated):
@@ -105,10 +119,13 @@ def complete_apply(procedure, args, env):
         return val
 
 def optimize_tail_calls(unoptimized_scheme_eval):
-    """Return a properly tail recursive version of an eval function."""
+    """Return a properly tail recursive version of an eval function.
+    返回一个经过适当尾递归优化的 eval 函数。
+    """
     def optimized_eval(expr, env, tail=False):
         """Evaluate Scheme expression EXPR in Frame ENV. If TAIL,
         return an Unevaluated containing an expression for further evaluation.
+        在环境 ENV 中求值 Scheme 表达式 EXPR。如果 tail 为 True，则返回一个包含该表达式用于后续求值的 Unevaluated 对象。
         """
         if tail and not scheme_symbolp(expr) and not self_evaluating(expr):
             return Unevaluated(expr, env)
@@ -119,21 +136,8 @@ def optimize_tail_calls(unoptimized_scheme_eval):
         # END OPTIONAL PROBLEM 1
     return optimized_eval
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 ################################################################
 # Uncomment the following line to apply tail call optimization #
 ################################################################
-
+# 取消以下注释以启用尾调用优化
 # scheme_eval = optimize_tail_calls(scheme_eval)
