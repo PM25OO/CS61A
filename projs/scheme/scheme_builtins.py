@@ -1,4 +1,5 @@
 """This module implements the built-in procedures of the Scheme language."""
+"""本模块实现了Scheme语言的内置程序。"""
 
 import math
 import numbers
