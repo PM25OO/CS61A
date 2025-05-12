@@ -36,6 +36,7 @@ class Frame:
         """
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
+        self.bindings.update({symbol : value})
         # END PROBLEM 1
 
     def lookup(self, symbol):
@@ -44,6 +45,10 @@ class Frame:
         """
         # BEGIN PROBLEM 1
         "*** YOUR CODE HERE ***"
+        if symbol in self.bindings.keys() :
+            return self.bindings[symbol]
+        elif(self.parent): 
+            return self.parent.lookup(symbol)
         # END PROBLEM 1
         raise SchemeError('unknown identifier: {0}'.format(symbol))
 
