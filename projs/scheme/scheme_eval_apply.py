@@ -13,7 +13,7 @@ import scheme_forms
 
 def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     """Evaluate Scheme expression EXPR in Frame ENV.
-    在环境 ENV 中求值 Scheme 表达式 EXPR。
+    - 在环境 ENV 中求值 Scheme 表达式 EXPR。
 
     >>> expr = read_line('(+ 2 2)')
     >>> expr
@@ -38,12 +38,14 @@ def scheme_eval(expr, env, _=None): # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 3
         "*** YOUR CODE HERE ***"
+        procedure = scheme_eval(first, env)
+        return scheme_apply(procedure, expr.rest, env)
         # END PROBLEM 3
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
     Frame ENV, the current environment.
-    在当前环境 Frame ENV 中，将 Scheme 过程 PROCEDURE 应用于参数值 ARGS（一个 Scheme 列表）。
+    - 在当前环境 Frame ENV 中，将 Scheme 过程 PROCEDURE 应用于参数值 ARGS（一个 Scheme 列表）。
     """
     validate_procedure(procedure)
     if not isinstance(env, Frame):
