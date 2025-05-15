@@ -1,5 +1,7 @@
 class Pair:
     """A pair has two instance attributes: first and rest. rest must be a Pair or nil
+       
+    一个 Pair 对象有两个实例属性：first 和 rest。rest 必须是一个 Pair 实例或 nil。
 
     >>> s = Pair(1, Pair(2, nil))
     >>> s
@@ -41,7 +43,8 @@ class Pair:
         return self.first == p.first and self.rest == p.rest
 
     def map(self, fn):
-        """Return a Scheme list after mapping Python function FN to SELF."""
+        """Return a Scheme list after mapping Python function FN to SELF.
+        - 将 Python 函数 FN 映射到 SELF 上，并返回一个 Scheme 风格的列表。"""
         mapped = fn(self.first)
         if self.rest is nil or isinstance(self.rest, Pair):
             return Pair(mapped, self.rest.map(fn))
@@ -49,7 +52,8 @@ class Pair:
             raise TypeError('ill-formed list (cdr is a promise)')
 
     def flatmap(self, fn):
-        """Return a Scheme list after flatmapping Python function FN to SELF."""
+        """Return a Scheme list after flatmapping Python function FN to SELF.
+        - 将 Python 函数 FN 以 flatmap 方式作用于 SELF 后返回一个 Scheme 风格的列表。"""
         from scheme_builtins import scheme_append
         mapped = fn(self.first)
         if self.rest is nil or isinstance(self.rest, Pair):
@@ -59,7 +63,7 @@ class Pair:
 
 
 class nil:
-    """The empty list"""
+    """The empty list 空列表"""
 
     def __repr__(self):
         return 'nil'
@@ -79,7 +83,8 @@ class nil:
 nil = nil() # Assignment hides the nil class; there is only one instance
 
 def repl_str(val):
-    """Should largely match str(val), except for booleans and undefined."""
+    """Should largely match str(val), except for booleans and undefined.
+    - 应该与 str(val) 的结果基本一致，但对布尔值和 undefined 做了特殊处理。"""
     if val is True:
         return "#t"
     if val is False:
