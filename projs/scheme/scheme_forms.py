@@ -11,6 +11,10 @@ from scheme_builtins import *
 # its first argument---a Scheme list representing a special form without the
 # initial identifying symbol (if, lambda, quote, ...). Its second argument is
 # the environment in which the form is to be evaluated.
+# 
+# 以下每个 do_xxx_form 函数都接受一个特殊形式的 cdr 作为第一个参数——
+# 这是一个表示特殊形式的 Scheme 列表，但不包含初始的标识符号（if、lambda、quote 等）。
+# 第二个参数是要在其中计算该形式的环境。
 
 def do_define_form(expressions, env):
     """Evaluate a define form.
