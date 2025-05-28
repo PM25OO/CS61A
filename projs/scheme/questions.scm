@@ -22,7 +22,17 @@
 ; ; the merged lists.
 (define (merge ordered? s1 s2)
   ; BEGIN PROBLEM 16
-  'replace-this-line)
+  (if (null? s1)
+      s2
+      (if (null? s2)
+          s1
+          (append ((lambda (x y)
+                     (if (ordered? x y)
+                         (list x y)
+                         (list y x)))
+                   (car s1)
+                   (car s2))
+                  (merge ordered? (cdr s1) (cdr s2))))))
 
 ; END PROBLEM 16
 ; ; Optional Problem 2
