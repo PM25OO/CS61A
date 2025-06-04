@@ -16,6 +16,8 @@ def calc_eval(exp):
     if isinstance(exp, Pair):
         operator = exp.first # UPDATE THIS FOR Q2, e.g (+ 1 2), + is the operator
         operands = exp.rest # UPDATE THIS FOR Q2, e.g (+ 1 2), 1 and 2 are operands
+        if operator in bindings: 
+            return calc_apply(bindings[operator], operands)
         if operator == 'and': # and expressions
             return eval_and(operands)
         elif operator == 'define': # define expressions
@@ -26,8 +28,8 @@ def calc_eval(exp):
         return OPERATORS[exp]
     elif isinstance(exp, int) or isinstance(exp, bool):   # Numbers and booleans
         return exp
-    elif _________________: # CHANGE THIS CONDITION FOR Q4, where are variables stored?
-        return _________________ # UPDATE THIS FOR Q4, how do you access a variable?
+    elif exp in bindings: # CHANGE THIS CONDITION FOR Q4, where are variables stored?
+            return bindings[exp] # UPDATE THIS FOR Q4, how do you access a variable?
 
 def calc_apply(op, args):
     return op(args)
@@ -107,6 +109,10 @@ def eval_define(expressions):
     2
     """
     "*** YOUR CODE HERE ***"
+    key = expressions.first
+    value = calc_eval(expressions.rest.first)
+    bindings.update({key : value})
+    return key
 
 OPERATORS = { "//": floor_div, "+": addition, "-": subtraction, "*": multiplication, "/": division }
 
