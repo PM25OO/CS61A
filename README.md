@@ -6,7 +6,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
 
-![Progress](https://img.shields.io/badge/Progress-Learning-green?style=for-the-badge)
+![Progress](https://img.shields.io/badge/Progress-Completed-brightgreen?style=for-the-badge)
 
 *加州大学伯克利分校 计算机程序的结构与解释*
 
